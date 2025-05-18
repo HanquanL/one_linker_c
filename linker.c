@@ -28,20 +28,16 @@ int main(int argc, char *argv[]){
         printf("Error: Cannot open file %s\n", argv[-1]);
         exit(EXIT_FAILURE);
     }
-    while((token = getToken()) != NULL){
-        printf("token=<%s> positon=%d:%d\n", token, lineNumber, charNumber);
-    }
-    printf("EOF position %d:%d\n", lineNumber, charNumber);
+    fgets(token, 1, inputFile);
+    printf("%s",token);
+    
+    // while((token = getToken()) != NULL){
+    //     printf("token=<%s> positon=%d:%d\n", token, lineNumber, charNumber);
+    // }
+    // printf("EOF position %d:%d\n", lineNumber, charNumber);
     return 0;
 }
 
 char *getToken(){
-    char* token;
-    fgets(token, 2, inputFile);
-    charNumber++;
-    if(token[0] == '\n'){
-        lineNumber++;
-        charNumber = 0;
-    }
-    return token;
-};
+    return NULL;
+}
