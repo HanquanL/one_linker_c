@@ -4,40 +4,56 @@
 #include <unistd.h>
 #include <ctype.h> // for isappha(), isdigit() etc.
 
+#define MAX_STR_LEN 1024
+
 bool ifDetail = false;
-int lineNumber = 0;
-int charNumber = 0;
+int lineNumber = 1;
+int charNumber = 1;
 FILE *inputFile;
 
 char *getToken();
 
-int main(int argc, char *argv[]){
+int main(int argc, char *argv[])
+{
     int c;
     char *token;
 
-    while((c = getopt(argc, argv, "d")) != -1){
-        switch(c){
-            case 'd':
-                ifDetail = true;
-                break;
-            default:
-                abort();
+    while ((c = getopt(argc, argv, "d")) != -1)
+    {
+        switch (c)
+        {
+        case 'd':
+            ifDetail = true;
+            break;
+        default:
+            abort();
         }
     }
-    if((inputFile = fopen(argv[argc - 1], "r")) ==NULL){
-        printf("Error: Cannot open file %s\n", argv[-1]);
+    if ((inputFile = fopen(argv[argc - 1], "r")) == NULL)
+    {
+        printf("Error: Cannot open file %s\n", argv[argc - 1]);
         exit(EXIT_FAILURE);
     }
-    fgets(token, 1, inputFile);
-    printf("%s",token);
-    
+    printf("Symbol Table\n");
     // while((token = getToken()) != NULL){
     //     printf("token=<%s> positon=%d:%d\n", token, lineNumber, charNumber);
     // }
     // printf("EOF position %d:%d\n", lineNumber, charNumber);
+    if (!ifDetail)
+    {
+        printf("Memory Map\n");
+    }
+    else
+    {
+        printf("Memory Map| Label | Instr -> Explanation | Warn/Errors\n");
+        printf("-------------------------------------------------------\n");
+    }
     return 0;
 }
 
-char *getToken(){
+char *getToken()
+{
+    char tempToken[MAX_STR_LEN];
+
     return NULL;
 }
