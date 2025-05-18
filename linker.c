@@ -2,13 +2,18 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <unistd.h>
+#include <ctype.h> // for isappha(), isdigit() etc.
 
 bool ifDetail = false;
+int lineNumber = 0;
+int charNumber = 0;
+FILE *inputFile;
+
+char *getToken();
 
 int main(int argc, char *argv[]){
     int c;
-    int ch;
-    FILE *inputFile;
+    char *token;
 
     while((c = getopt(argc, argv, "d")) != -1){
         switch(c){
@@ -23,9 +28,20 @@ int main(int argc, char *argv[]){
         printf("Error: Cannot open file %s\n", argv[-1]);
         exit(EXIT_FAILURE);
     }
-    while((ch = getc(inputFile)) != EOF){
-        printf("%c", ch);
+    while((token = getToken()) != NULL){
+        printf("token=<%s> positon=%d:%d\n", token, lineNumber, charNumber);
     }
-    fclose(inputFile);
+    printf("EOF position %d:%d\n", lineNumber, charNumber);
     return 0;
 }
+
+char *getToken(){
+    char* token;
+    fgets(token, 2, inputFile);
+    charNumber++;
+    if(token[0] == '\n'){
+        lineNumber++;
+        charNumber = 0;
+    }
+    return token;
+};
